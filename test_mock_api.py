@@ -6,10 +6,14 @@ def test_client_api():
     url = "http://localhost:5000/api/client"
     
     try:
-        # Send POST request
-        response = requests.post(url, json={"query": "some_data"})
+        # 创建会话并禁用环境变量中的代理设置
+        session = requests.Session()
+        session.trust_env = False
         
-        # Print status code and response content
+        # 使用会话发送POST请求
+        response = session.post(url, json={"query": "some_data"})
+        
+        # 打印状态码和响应内容
         print(f"Status code: {response.status_code}")
         print(f"Response content: {json.dumps(response.json(), ensure_ascii=False, indent=2)}")
         
